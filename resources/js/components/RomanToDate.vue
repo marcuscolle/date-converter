@@ -5,32 +5,58 @@
             <h1 class="text-2xl font-semibold text-gray-600">Convert a Roman to Date</h1>
 
             <form @submit.prevent="handleSubmit" class="mt-4">
-                <MaskInput
+                <input
                     type="text"
                     v-model="dateInput"
-                    mask="SSSS-SSSS-SSSSSSSS"
-                    placeholder="Enter Roman numerals"
+                    placeholder="Enter Roman numerals (e.g.XII-XII-MMXXIV)"
                     class="border p-2 rounded w-full"
                 />
                 <button type="submit" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded">Convert</button>
             </form>
 
             <!-- Uncomment if needed -->
-            <!-- <div class="mt-4">
+           <div class="mt-4">
               <p v-if="convertedDate">Converted Date: {{ convertedDate }}</p>
               <p v-if="errorMessage" class="text-red-500">{{ errorMessage }}</p>
-            </div> -->
+            </div>
 
         </div>
     </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     data() {
         return {
             dateInput: '',
+            convertedDate: '',
+            errorMessage: '',
         };
+    },
+
+    methods: {
+        handleSubmit() {
+            axios.post('/api/converter', {
+                roman: this.dateInput,
+            })
+                .then(response => {
+                    if (response.data) {
+                        this.convertedDate = response.data.result;
+                        this.errorMessage = '';
+                    }
+
+                    if (response.data.error) {
+                        this.errorMessage = response.data.error;
+                        this.convertedDate = '';
+                    }
+                })
+                .catch(error => {
+                    this.errorMessage = error.response.data.message;
+                    this.convertedDate = '';
+                });
+        },
     },
 };
 

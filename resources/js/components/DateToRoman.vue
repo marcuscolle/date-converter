@@ -16,21 +16,48 @@
                 <button type="submit" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded">Convert</button>
             </form>
 
-            <!--        <div class="mt-4">-->
-            <!--            <p v-if="convertedDate">Converted Date: {{ convertedDate }}</p>-->
-            <!--            <p v-if="errorMessage" class="text-red-500">{{ errorMessage }}</p>-->
-            <!--        </div>-->
+            <div class="mt-4">
+                <p v-if="convertedDate">Converted Roman Date: {{ convertedDate }}</p>
+                <p v-if="errorMessage" class="text-red-500">{{ errorMessage }}</p>
+            </div>
         </div>
     </div>
 
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     data() {
         return {
             dateInput: '',
+            convertedDate: '',
+            errorMessage: '',
         };
+    },
+
+    methods: {
+        handleSubmit() {
+            axios.post('/api/converter', {
+                date: this.dateInput,
+            })
+                .then(response => {
+                    if (response.data) {
+                        this.convertedDate = response.data.result;
+                        this.errorMessage = '';
+                    }
+
+                    if (response.data.error) {
+                        this.errorMessage = response.data.error;
+                        this.convertedDate = '';
+                    }
+                })
+                .catch(error => {
+                    this.errorMessage = error.response.data.message;
+                    this.convertedDate = '';
+                });
+        },
     },
 };
 

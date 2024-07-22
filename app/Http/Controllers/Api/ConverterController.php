@@ -15,7 +15,7 @@ class ConverterController extends Controller
         $converter = new ConverterService($request->validated());
 
         try {
-            $result = $converter->convert();
+            $result = $converter->converter();
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         }

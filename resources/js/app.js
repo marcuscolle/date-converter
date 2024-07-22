@@ -5,10 +5,13 @@
  */
 
 import { createApp } from 'vue';
+
 //Imports
 import DateConverter from "./components/DateConverter.vue";
 import DateToRoman from "./components/DateToRoman.vue";
 import RomanToDate from "./components/RomanToDate.vue";
+
+import store from './store';
 
 //External components
 import { MaskInput } from 'vue-3-mask';
@@ -19,7 +22,7 @@ import { MaskInput } from 'vue-3-mask';
  * to use in your application's views. An example is included for you.
  */
 
-const app = createApp({});
+const app = createApp({}).use(store);
 
 //Global components
 

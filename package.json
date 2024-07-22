@@ -17,6 +17,6 @@
         "vue": "^3.2.37"
     },
     "dependencies": {
-        "vue-3-mask": "^0.0.1-alpha"
+        "vuex": "^4.1.0"
     }
 }

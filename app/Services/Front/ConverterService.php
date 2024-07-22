@@ -3,7 +3,6 @@
 namespace App\Services\Front;
 
 use Exception;
-use mysql_xdevapi\XSession;
 
 class ConverterService
 {
@@ -17,7 +16,7 @@ class ConverterService
     /**
      * @throws Exception
      */
-    public function convert(): string
+    public function converter(): string
     {
 
         if (isset($this->number['date']) && $this->number['date'] !== null) {

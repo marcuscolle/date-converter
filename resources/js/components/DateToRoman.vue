@@ -1,69 +1,73 @@
 <template>
-
-    <div class="flex items-center justify-center mx-auto py-8 ">
+    <div class="flex items-center justify-center mx-auto py-8">
         <div class="bg-gray-50 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full md:w-1/2 lg:w-1/3">
-
             <h1 class="text-2xl font-semibold text-gray-600">Convert a Date to Roman</h1>
-
             <form @submit.prevent="handleSubmit" class="mt-4">
-                <MaskInput
-                    type="text"
-                    v-model="dateInput"
-                    mask="##-##-####"
-                    placeholder="Enter date"
+                <input
+                    :value="dateInput"
+                    placeholder="Enter date (e.g. DD-MM-YYYY)"
                     class="border p-2 rounded w-full"
+                    @input="updateDateInput"
                 />
                 <button type="submit" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded">Convert</button>
             </form>
-
             <div class="mt-4">
-                <p v-if="convertedDate">Converted Roman Date: {{ convertedDate }}</p>
-                <p v-if="errorMessage" class="text-red-500">{{ errorMessage }}</p>
+                <p v-if="convertedDate" class="shadow-lg border rounded px-8 pt-6 pb-8">Converted Roman Date: {{ convertedDate }}</p>
+                <p v-if="errorMessage" class="text-red-500 shadow-lg rounded px-8 pt-6 pb-8">{{ errorMessage }}</p>
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
 import axios from "axios";
 
 export default {
+    props: {
+        dateToRomanData: Object
+    },
     data() {
         return {
-            dateInput: '',
-            convertedDate: '',
-            errorMessage: '',
+            dateInput: this.dateToRomanData.dateInput || '',
+            convertedDate: this.dateToRomanData.convertedDate || '',
+            errorMessage: this.dateToRomanData.errorMessage || ''
         };
     },
-
+    watch: {
+        dateToRomanData: {
+            handler(newData) {
+                this.dateInput = newData.dateInput || '';
+                this.convertedDate = newData.convertedDate || '';
+                this.errorMessage = newData.errorMessage || '';
+            },
+            deep: true
+        }
+    },
     methods: {
+        updateDateInput(event) {
+            this.dateInput = event.target.value; // Or just `event` if the value is emitted directly
+        },
         handleSubmit() {
-            axios.post('/api/converter', {
-                date: this.dateInput,
-            })
+            axios.post('/api/converter', { date: this.dateInput })
                 .then(response => {
-                    if (response.data) {
-                        this.convertedDate = response.data.result;
-                        this.errorMessage = '';
-                    }
-
-                    if (response.data.error) {
-                        this.errorMessage = response.data.error;
-                        this.convertedDate = '';
-                    }
+                    const { result, error } = response.data;
+                    this.convertedDate = result;
+                    this.errorMessage = error || '';
+                    this.$emit('update-date-to-roman', {
+                        dateInput: this.dateInput,
+                        convertedDate: this.convertedDate,
+                        errorMessage: this.errorMessage
+                    });
                 })
                 .catch(error => {
                     this.errorMessage = error.response.data.message;
                     this.convertedDate = '';
                 });
-        },
-    },
+        }
+    }
 };
-
 </script>
 
-
 <style scoped>
-
+/* Add any styles if needed */
 </style>

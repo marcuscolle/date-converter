@@ -20,6 +20,9 @@ export default defineConfig({
             },
         }),
     ],
+    optimizeDeps: {
+        include: ['vuex'], // Ensure Vuex is properly include
+    },
     resolve: {
         alias: {
             vue: 'vue/dist/vue.esm-bundler.js',

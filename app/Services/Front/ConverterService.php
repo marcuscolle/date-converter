@@ -55,7 +55,11 @@ class ConverterService
         $month = $this->convertRomanToInteger($date[1]);
         $year = $this->convertRomanToInteger($date[2]);
 
-        return $day . '-' . $month . '-' . $year;
+        $formattedDay = sprintf('%02d', $day);
+        $formattedMonth = sprintf('%02d', $month);
+        $formattedYear = sprintf('%04d', $year);
+
+        return $formattedDay . '-' . $formattedMonth . '-' . $formattedYear;
     }
 
 

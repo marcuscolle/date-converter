@@ -5,6 +5,13 @@
  */
 
 import { createApp } from 'vue';
+//Imports
+import DateConverter from "./components/DateConverter.vue";
+import DateToRoman from "./components/DateToRoman.vue";
+import RomanToDate from "./components/RomanToDate.vue";
+
+//External components
+import { MaskInput } from 'vue-3-mask';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -14,25 +21,17 @@ import { createApp } from 'vue';
 
 const app = createApp({});
 
-import ExampleComponent from './components/ExampleComponent.vue';
-app.component('example-component', ExampleComponent);
+//Global components
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+//Components registration
+app.component('date-converter', DateConverter);
+app.component('date-to-roman', DateToRoman);
+app.component('roman-to-date', RomanToDate);
 
-// Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, definition]) => {
-//     app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
-// });
 
-/**
- * Finally, we will attach the application instance to a HTML element with
- * an "id" attribute of "app". This element is included with the "auth"
- * scaffolding. Otherwise, you will need to add an element yourself.
- */
+//external components
+app.component('MaskInput', MaskInput);
 
+
+//Mounting the app
 app.mount('#app');

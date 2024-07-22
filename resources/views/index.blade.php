@@ -2,6 +2,6 @@
 
 @section('content')
 
-    <example-component></example-component>
+    <date-converter></date-converter>
 
 @endsection

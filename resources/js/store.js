@@ -1,6 +1,7 @@
 import { createStore } from 'vuex';
 
 export default createStore({
+    // define the initial state of the application
     state: {
         activeTab: 'dateToRoman',
         dateToRoman: {
@@ -14,6 +15,7 @@ export default createStore({
             errorMessage: '',
         },
     },
+    // mutations are methods used to directly mutate (change) the state above.
     mutations: {
         setActiveTab(state, tab) {
             state.activeTab = tab;
@@ -25,6 +27,7 @@ export default createStore({
             state.romanToDate = payload;
         },
     },
+    // actions are methods used to commit mutations, they can contain asynchronous operations. will commit to the mutations above.
     actions: {
         setActiveTab({ commit }, tab) {
             commit('setActiveTab', tab);

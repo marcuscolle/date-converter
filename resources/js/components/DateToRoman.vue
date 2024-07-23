@@ -1,7 +1,7 @@
 <template>
     <div class="flex items-center justify-center mx-auto py-8">
         <div class="bg-gray-50 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full md:w-1/2 lg:w-1/3">
-            <h1 class="text-2xl font-semibold text-gray-600">Convert a Date to Roman</h1>
+            <h1 class="text-2xl font-semibold text-gray-600">{{ title }}</h1>
             <form @submit.prevent="handleSubmit" class="mt-4">
                 <input
                     :value="dateInput"
@@ -16,8 +16,11 @@
 
             </form>
             <div class="mt-4">
-                <p v-if="convertedDate" class="shadow-lg border rounded px-8 pt-6 pb-8">Converted Roman Date: {{ convertedDate }}</p>
-                <p v-if="errorMessage" class="text-red-500 shadow-lg rounded px-8 pt-6 pb-8">{{ errorMessage }}</p>
+                <p v-if="convertedDate" class="shadow-lg border rounded bg-gray-100 px-8 pt-6 pb-8">
+                    {{ ResultTitle }}:
+                    <span class="text-2xl font-bold">{{ convertedDate }}</span>
+                </p>
+                <p v-if="errorMessage" class="text-red-500 bg-red-100 shadow-lg rounded px-8 pt-6 pb-8">{{ errorMessage }}</p>
             </div>
         </div>
     </div>
@@ -34,10 +37,13 @@ export default {
         return {
             dateInput: this.dateToRomanData.dateInput || '',
             convertedDate: this.dateToRomanData.convertedDate || '',
-            errorMessage: this.dateToRomanData.errorMessage || ''
+            errorMessage: this.dateToRomanData.errorMessage || '',
+            title: 'Convert a Date to Roman',
+            ResultTitle: 'Converted Roman Date'
         };
     },
     watch: {
+        //watch for changes in the parent component state
         dateToRomanData: {
             handler(newData) {
                 this.dateInput = newData.dateInput || '';
@@ -49,7 +55,8 @@ export default {
     },
     methods: {
         updateDateInput(event) {
-            this.dateInput = event.target.value; // Or just `event` if the value is emitted directly
+            //this will update the dateInput state with the value of the input field converted
+            this.dateInput = event.target.value;
         },
         handleSubmit() {
             axios.post('/api/converter', { date: this.dateInput })
@@ -57,6 +64,8 @@ export default {
                     const { result, error } = response.data;
                     this.convertedDate = result;
                     this.errorMessage = error || '';
+
+                    //emit the updated state to the parent component setting the data into the input fields
                     this.$emit('update-date-to-roman', {
                         dateInput: this.dateInput,
                         convertedDate: this.convertedDate,
@@ -73,6 +82,7 @@ export default {
             this.dateInput = '';
             this.convertedDate = '';
             this.errorMessage = '';
+            //clean the state of the parent component input field
             this.$emit('update-date-to-roman', {
                 dateInput: '',
                 convertedDate: '',
@@ -84,5 +94,5 @@ export default {
 </script>
 
 <style scoped>
-/* Add any styles if needed */
+
 </style>

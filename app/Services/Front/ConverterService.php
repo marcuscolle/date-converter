@@ -62,7 +62,6 @@ class ConverterService
         return $formattedDay . '-' . $formattedMonth . '-' . $formattedYear;
     }
 
-
     /**
      * Convert an integer to a Roman numeral.
      *

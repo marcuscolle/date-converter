@@ -21,7 +21,7 @@ export default defineConfig({
         }),
     ],
     optimizeDeps: {
-        include: ['vuex'], // Ensure Vuex is properly include
+        include: ['vuex'],
     },
     resolve: {
         alias: {

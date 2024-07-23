@@ -14,7 +14,7 @@
 
 ### How to Install
 
-<p>At the first step you must clone the repo from [this GitHub link](https://github.com/marcuscolle/date-converter.git). into your preferred folder where you can serve the application.</p>
+<p>At the first step you must clone the repo from https://github.com/marcuscolle/date-converter.git. into your preferred folder where you can serve the application.</p>
 
 <p>Now you must open your cloned project first you need to create an .env file, copy and paste the content from .env.exemple file into it. </p>
 

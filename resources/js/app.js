@@ -14,7 +14,7 @@ import RomanToDate from "./components/RomanToDate.vue";
 import store from './store';
 
 //External components
-import { MaskInput } from 'vue-3-mask';
+
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -33,7 +33,7 @@ app.component('roman-to-date', RomanToDate);
 
 
 //external components
-app.component('MaskInput', MaskInput);
+
 
 
 //Mounting the app

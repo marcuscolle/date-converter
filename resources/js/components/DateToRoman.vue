@@ -9,7 +9,11 @@
                     class="border p-2 rounded w-full"
                     @input="updateDateInput"
                 />
-                <button type="submit" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded">Convert</button>
+                <div class="flex justify-between mt-4">
+                    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">Convert</button>
+                    <button type="button" @click="resetForm" class="bg-gray-500 text-white py-2 px-4 rounded">Reset</button>
+                </div>
+
             </form>
             <div class="mt-4">
                 <p v-if="convertedDate" class="shadow-lg border rounded px-8 pt-6 pb-8">Converted Roman Date: {{ convertedDate }}</p>
@@ -63,6 +67,17 @@ export default {
                     this.errorMessage = error.response.data.message;
                     this.convertedDate = '';
                 });
+        },
+
+        resetForm() {
+            this.dateInput = '';
+            this.convertedDate = '';
+            this.errorMessage = '';
+            this.$emit('update-date-to-roman', {
+                dateInput: '',
+                convertedDate: '',
+                errorMessage: ''
+            });
         }
     }
 };

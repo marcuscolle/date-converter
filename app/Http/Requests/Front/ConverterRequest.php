@@ -32,7 +32,8 @@ class ConverterRequest extends FormRequest
         }
 
         if($this->input('roman') !== null) {
-            $rules['roman'] = ['required', 'regex:/^([MDCLXVI]+-?)*$/i'];
+
+            $rules['roman'] = ['required', 'regex:/^[MDCLXVI]+-[MDCLXVI]+-[MDCLXVI]+$/'];
         }
 
         return $rules;
@@ -48,8 +49,9 @@ class ConverterRequest extends FormRequest
     {
         return [
             'date.required' => 'The number field is required.',
+            'date.date_format' => 'The date field must be a valid date format. Use DD-MM-YYYY.',
             'roman.required' => 'The roman field is required. Use - to separate the roman numerals as DD-MM-YYYY.',
-            'roman.regex' => 'The roman field must be a valid Roman numeral. Use - to separate the roman numerals as DD-MM-YYYY.',
+            'roman.regex' => 'The roman numeral must be in uppercase letters and Roman numerals. Use - to separate the roman numerals as DD-MM-YYYY.',
         ];
     }
 }
